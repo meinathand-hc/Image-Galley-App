@@ -12,7 +12,7 @@ COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir PyMySQL
+RUN pip install --no-cache-dir PyMySQL gunicorn
 
 # Copy application
 COPY . .
@@ -24,4 +24,4 @@ RUN mkdir -p app/static/uploads
 EXPOSE 5000
 
 # Run application
-CMD ["python3", "run.py"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "run:app"]
